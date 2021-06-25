@@ -1,0 +1,15 @@
+
+# Data folder
+[dD][aA][tT][aA]/
+
+# Derived data
+DerivedData/
+
+# User preferences
+userPreferences.*/
+
+# System files
+ehthumbs.db
+Thumbs.db
+data.4DD
+.DS_Store
