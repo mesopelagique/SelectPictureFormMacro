@@ -95,11 +95,26 @@ Function onInvoke($editor : Object)->$result : Object
 					End if 
 					
 					If (Length:C16($url)>0)
-						$status:=HTTP Request:C1158(HTTP GET method:K71:1; $url; $body; $blob)
+						ARRAY TEXT:C222($headerNames; 0)
+						ARRAY TEXT:C222($headerValues; 0)
+						$status:=HTTP Request:C1158(HTTP GET method:K71:1; $url; $body; $blob; $headerNames; $headerValues)
 						
 						If ($status=200)
-							
-							$file:=$folder.file(Generate UUID:C1066+".png")
+							var $filename : Text
+							var $pos : Integer
+							$pos:=Find in array:C230($headerNames; "X-Imgix-ID")
+							If ($pos>0)
+								$filename:=$headerValues{$pos}
+							Else 
+								$filename:=Generate UUID:C1066
+							End if 
+							$pos:=Find in array:C230($headerNames; "Content-type")
+							If ($pos>0)
+								$filename:=$filename+"."+Replace string:C233($headerValues{$pos}; "image/"; "")
+							Else 
+								$filename:=$filename+".png"
+							End if 
+							$file:=$folder.file($filename)
 							$file.setContent($blob)
 							
 							$currentSelection.picture:=$file.path
