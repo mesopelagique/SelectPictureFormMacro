@@ -87,19 +87,25 @@ Function onInvoke($editor : Object)->$result : Object
 					
 					If ($menu.choice="#searchRandomImage")
 						$terms:=Request:C163("Search words?")
-						$url:=$url+"?"+Replace string:C233($terms; " "; "&")
+						If (OK=1)
+							$url:=$url+"?"+Replace string:C233($terms; " "; "&")
+						Else 
+							$url:=""  // cancel
+						End if 
 					End if 
 					
-					$status:=HTTP Request:C1158(HTTP GET method:K71:1; $url; $body; $blob)
-					
-					If ($status=200)
+					If (Length:C16($url)>0)
+						$status:=HTTP Request:C1158(HTTP GET method:K71:1; $url; $body; $blob)
 						
-						$file:=$folder.file(Generate UUID:C1066+".png")
-						$file.setContent($blob)
-						
-						$currentSelection.picture:=$file.path
-					Else 
-						ALERT:C41("unable to download random image")
+						If ($status=200)
+							
+							$file:=$folder.file(Generate UUID:C1066+".png")
+							$file.setContent($blob)
+							
+							$currentSelection.picture:=$file.path
+						Else 
+							ALERT:C41("unable to download random image")
+						End if 
 					End if 
 					
 				Else 
