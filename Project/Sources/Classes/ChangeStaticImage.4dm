@@ -46,8 +46,12 @@ Function onInvoke($editor : Object)->$result : Object
 			$menu.line()
 			$menu.append("Copy from disk..."; "#copyFromDisk")
 			$menu.append("Select from /RESOURCES"; "#selectFromResources")
-			$menu.append("Unsplash: random image"; "#selectRandomImage")
-			$menu.append("Unsplash: search image"; "#searchRandomImage")
+			
+			$unsplashmenu:=cs:C1710.menu.new()
+			$unsplashmenu.append("Get random image"; "#selectRandomImage")
+			$unsplashmenu.append("Search an image"; "#searchRandomImage")
+			
+			$menu.append("Unsplash"; $unsplashmenu)
 			
 		End if 
 		
