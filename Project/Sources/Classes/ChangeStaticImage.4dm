@@ -46,6 +46,7 @@ Function onInvoke($editor : Object)->$result : Object
 			$menu.line()
 			$menu.append("Copy from disk..."; "#copyFromDisk")
 			$menu.append("Select from /RESOURCES"; "#selectFromResources")
+			$menu.append("Unsplash: random image"; "#selectRandomImage")
 			
 		End if 
 		
@@ -74,6 +75,21 @@ Function onInvoke($editor : Object)->$result : Object
 				: ($menu.choice="#selectFromResources")
 					
 					This:C1470.menuResources(Folder:C1567(fk resources folder:K87:11; *); $currentSelection)
+					
+				: ($menu.choice="#selectRandomImage")
+					var $body; $blob : Blob
+					
+					$status:=HTTP Request:C1158(HTTP GET method:K71:1; "https://source.unsplash.com/random"; $body; $blob)
+					
+					If ($status=200)
+						
+						$file:=$folder.file(Generate UUID:C1066+".png")
+						$file.setContent($blob)
+						
+						$currentSelection.picture:=$file.path
+					Else 
+						ALERT:C41("unable to download random image")
+					End if 
 					
 				Else 
 					
