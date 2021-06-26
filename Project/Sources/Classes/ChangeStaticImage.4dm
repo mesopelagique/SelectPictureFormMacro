@@ -47,6 +47,7 @@ Function onInvoke($editor : Object)->$result : Object
 			$menu.append("Copy from disk..."; "#copyFromDisk")
 			$menu.append("Select from /RESOURCES"; "#selectFromResources")
 			$menu.append("Unsplash: random image"; "#selectRandomImage")
+			$menu.append("Unsplash: search image"; "#searchRandomImage")
 			
 		End if 
 		
@@ -76,10 +77,20 @@ Function onInvoke($editor : Object)->$result : Object
 					
 					This:C1470.menuResources(Folder:C1567(fk resources folder:K87:11; *); $currentSelection)
 					
-				: ($menu.choice="#selectRandomImage")
+				: (($menu.choice="#selectRandomImage") | ($menu.choice="#searchRandomImage"))
 					var $body; $blob : Blob
 					
-					$status:=HTTP Request:C1158(HTTP GET method:K71:1; "https://source.unsplash.com/random"; $body; $blob)
+					var $url; $terms : Text
+					$url:="https://source.unsplash.com/"
+					
+					$url:=$url+String:C10($currentSelection.width)+"x"+String:C10($currentSelection.height)
+					
+					If ($menu.choice="#searchRandomImage")
+						$terms:=Request:C163("Search words?")
+						$url:=$url+"?"+Replace string:C233($terms; " "; "&")
+					End if 
+					
+					$status:=HTTP Request:C1158(HTTP GET method:K71:1; $url; $body; $blob)
 					
 					If ($status=200)
 						
