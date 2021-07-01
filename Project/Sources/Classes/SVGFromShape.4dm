@@ -1,7 +1,7 @@
 
 Class constructor
 	This:C1470.label:="New SVG from shapes"
-	This:C1470.shapeTypes:=New collection:C1472("rectangle"; "line"; "oval")
+	This:C1470.shapeTypes:=New collection:C1472("rectangle"; "line"; "oval"; "picture")
 	
 Function onInvoke($editor : Object)->$result : Object
 	var $currentSelections; $coordinates; $folder; $picture : Object
@@ -16,7 +16,6 @@ Function onInvoke($editor : Object)->$result : Object
 	Else 
 		
 		$coordinates:=This:C1470.enclosingRec($currentSelections)
-		
 		
 		
 		$folder:=Folder:C1567(fk database folder:K87:14; *).folder("Project/Sources/Forms/").folder($editor.editor.name).folder("Images")
@@ -110,6 +109,25 @@ Function objectToSVG($objetSVGParent : Variant; $object : Object; $coordinates :
 				Choose:C955($object.stroke=Null:C1517; "#000000"; $object.stroke); \
 				Choose:C955($object.fill=Null:C1517; "#000000"; $object.fill); \
 				Choose:C955($object.strokeWidth=Null:C1517; 1; $object.strokeWidth))
+			// XXX or use SVG_New_ellipse_bounded if necessary
+			
+		: ($object.type="picture")
+			
+			var $pictureFile : Object
+			$pictureFile:=File:C1566($object.picture)
+			If ($pictureFile.exists)
+				var $pictureBlob : Blob
+				var $picture : Picture
+				$pictureBlob:=$pictureFile.getContent()
+				BLOB TO PICTURE:C682($pictureBlob; $picture)
+				
+				SVG_New_embedded_image($objetSVGParent; $picture; \
+					$object.left-$coordinates.left; \
+					$object.top-$coordinates.top)
+				
+				// XXX maybe force image size, or manage pictureFormat 
+				
+			End if 
 			
 		Else 
 			ASSERT:C1129(False:C215; "Unknown object "+String:C10($object.type))
