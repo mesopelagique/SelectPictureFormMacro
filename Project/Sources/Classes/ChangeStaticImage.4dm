@@ -36,7 +36,7 @@ Function onInvoke($editor : Object)->$result : Object
 	If ($currentSelection.type="picture")
 		
 		$menu:=cs:C1710.menu.new()
-		$folder:=Folder:C1567(fk database folder:; *).folder("Project/Sources/Forms/").folder($editor.editor.name).folder("Images")
+		$folder:=Folder:C1567(fk database folder:K87:14; *).folder("Project/Sources/Forms/").folder($editor.editor.name).folder("Images")
 		If ($folder.exists)
 			For each ($file; $folder.files())
 				If (Length:C16($file.name)>0)
