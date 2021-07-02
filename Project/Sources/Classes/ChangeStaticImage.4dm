@@ -1,7 +1,6 @@
 
-
 Class constructor
-	This:C1470.label:="Select static image"
+	This:C1470.label:="＋ Add/Change image"
 	This:C1470.images:=New collection:C1472(".jpg"; ".jpeg"; ".gif"; ".png"; ".svg"; ".tiff")
 	
 Function onInvoke($editor : Object)->$result : Object

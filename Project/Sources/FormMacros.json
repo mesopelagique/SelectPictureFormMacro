@@ -1,13 +1,19 @@
 {
 	"macros": {
+		"🧹 'images'": {
+			"class": "CleanImageNotUsed"
+		},
 		"New 🔲 from bounds": {
 			"class": "RectangleFromFrame"
 		},
-		"Select static image": {
+		"＋ Add/Change image": {
 			"class": "ChangeStaticImage"
 		},
 		"New SVG from shapes": {
 			"class": "SVGFromShape"
+		},
+		"Reveal image on disk": {
+			"class": "ShowImageOnDisk"
 		}
 	}
 }
