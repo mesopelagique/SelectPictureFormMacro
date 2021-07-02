@@ -38,21 +38,24 @@ Function onInvoke($editor : Object)->$result : Object
 		$menu:=cs:C1710.menu.new()
 		$folder:=Folder:C1567(fk database folder:K87:14; *).folder("Project/Sources/Forms/").folder($editor.editor.name).folder("Images")
 		If ($folder.exists)
+			
+			$imagemenu:=cs:C1710.menu.new()
 			For each ($file; $folder.files())
 				If (Length:C16($file.name)>0)
-					$menu.append($file.fullName; $file.path)
+					$imagemenu.append($file.fullName; $file.path)
 				End if 
 			End for each 
+			$menu.append("📁 images"; $imagemenu)
 			$menu.line()
 		End if 
 		$menu.append("Copy from disk..."; "#copyFromDisk")
 		$menu.append("Select from /RESOURCES"; "#selectFromResources")
 		
 		$unsplashmenu:=cs:C1710.menu.new()
-		$unsplashmenu.append("Get random image"; "#selectRandomImage")
-		$unsplashmenu.append("Search an image"; "#searchRandomImage")
+		$unsplashmenu.append("🎲 Get random image"; "#selectRandomImage")
+		$unsplashmenu.append("🔎 Search an image"; "#searchRandomImage")
 		
-		$menu.append("Unsplash"; $unsplashmenu)
+		$menu.append("🌐 Unsplash"; $unsplashmenu)
 		
 		
 		$menu.popup()
