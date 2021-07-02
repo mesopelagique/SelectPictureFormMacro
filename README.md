@@ -23,9 +23,17 @@ Add an image created from selected shapes (rectangle, oval, line) and images
 - if line stroke width is more than one, maybe not all will be shown
 - image are not resized yet according to 4d config
 
-## Create rectangle from object bounds
+## New rectangle from object bounds
 
 Allow to create a rectangle with same dimension of selected object
+
+## Reveal on disk
+
+If select an image and image exists show it on disk (opening the finder on macOS)
+
+## Clean images
+
+Remove all images from form images/ folder that are not used in objects (ie. button `icon` or image `picture`)
 
 ## Other components
 
