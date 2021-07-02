@@ -6,9 +6,26 @@
 [![license][license-shield]][license-url]
 [![discord][discord-shield]][discord-url]
 
+## Add image 
+
 Create a static picture object or change the current picture by selecting image from `Resources`, `images` form folder or anywhere on disk (by copying it) and even remotely from [unsplash](https://unsplash.com/) (random, search)
 
 ![screencast](Screencast.gif)
+
+## Create an SVG from shapes
+
+Add an image created from selected shapes (rectangle, oval, line) and images
+
+![SVGShape](SVGShape.gif)
+
+### Known issues
+
+- if line stroke width is more than one, maybe not all will be shown
+- image are not resized yet according to 4d config
+
+## Create rectangle from object bounds
+
+Allow to create a rectangle with same dimension of selected object
 
 ## Other components
 
