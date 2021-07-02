@@ -1,7 +1,17 @@
 {
+	"lib": {
+		"classes": [
+			"menu"
+		]
+	},
 	"test": {
 		"forms": [
 			"Form1"
+		]
+	},
+	"util": {
+		"methods": [
+			"generateFormMacrosFile"
 		]
 	},
 	"trash": {}
