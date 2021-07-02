@@ -1,7 +1,13 @@
 {
 	"macros": {
+		"New 🔲 from bounds": {
+			"class": "RectangleFromFrame"
+		},
 		"Select static image": {
 			"class": "ChangeStaticImage"
+		},
+		"New SVG from shapes": {
+			"class": "SVGFromShape"
 		}
 	}
 }
