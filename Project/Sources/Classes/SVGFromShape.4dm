@@ -27,7 +27,7 @@ Function onInvoke($editor : Object)->$result : Object
 		
 		$SVG:=SVG_New
 		For each ($objectName; $currentSelections)
-			This:C1470.objectToSVG($SVG; $currentSelections[$objectName]; $coordinates)
+			This:C1470.objectToSVG($SVG; $currentSelections[$objectName]; $objectName; $coordinates)
 		End for each 
 		
 		$file:=$folder.file($name+".svg")
@@ -56,7 +56,7 @@ Function onInvoke($editor : Object)->$result : Object
 		
 	End if 
 	
-Function objectToSVG($objetSVGParent : Variant; $object : Object; $coordinates : Object)
+Function objectToSVG($objetSVGParent : Variant; $object : Object; $objectName : Text; $coordinates : Object)
 	Case of 
 		: ($object.type="line")
 			
@@ -92,8 +92,8 @@ Function objectToSVG($objetSVGParent : Variant; $object : Object; $coordinates :
 			$rec:=SVG_New_rect($objetSVGParent; \
 				$object.left-$coordinates.left+($strokeWidth/2); \
 				$object.top-$coordinates.top+($strokeWidth/2); \
-				$object.left-$coordinates.left+$object.width-($strokeWidth); \
-				$object.top-$coordinates.top+$object.height-($strokeWidth); \
+				$object.width-($strokeWidth); \
+				$object.height-($strokeWidth); \
 				Choose:C955($object.borderRadius=Null:C1517; 0; $object.borderRadius); \
 				Choose:C955($object.borderRadius=Null:C1517; 0; $object.borderRadius); \
 				Choose:C955($object.stroke=Null:C1517; "#000000"; $object.stroke); \
@@ -104,9 +104,9 @@ Function objectToSVG($objetSVGParent : Variant; $object : Object; $coordinates :
 				DOM SET XML ATTRIBUTE:C866($rec; "fill-opacity"; 0)
 			End if 
 			
-			// SVG_SET_ID($rec;$objectName)
-/*SVG_Define_shadow($rec; "myShadow"; 4; 4; 4)
-SVG_SET_FILTER($rec; "myShadow")*/  // just some test to make a macro to add shadow
+			SVG_SET_ID($rec; $objectName)
+/*SVG_Define_shadow($rec; $objectName+"Shadow"; 4; 4; 4)
+SVG_SET_FILTER($rec; $objectName+"Shadow")  // just some test to make a macro to add shadow*/
 			
 		: ($object.type="oval")
 			
@@ -129,13 +129,13 @@ SVG_SET_FILTER($rec; "myShadow")*/  // just some test to make a macro to add sha
 			
 			// or use SVG_New_ellipse_bounded if necessary (but seems do not consider strokewidth to center)
 			//		$rec:=SVG_New_ellipse_bounded($objetSVGParent; \
-																								$object.left-$coordinates.left+($strokeWidth/2); \
-																								$object.top-$coordinates.top+($strokeWidth/2); \
-																								$object.width-($strokeWidth*2); \
-																								$object.height-($strokeWidth*2); \
-																								Choose($object.stroke=Null; "#000000"; $object.stroke); \
-																								Choose($object.fill=Null; "#000000"; $object.fill); \
-																								$strokeWidth)*/
+																																				$object.left-$coordinates.left+($strokeWidth/2); \
+																																				$object.top-$coordinates.top+($strokeWidth/2); \
+																																				$object.width-($strokeWidth*2); \
+																																				$object.height-($strokeWidth*2); \
+																																				Choose($object.stroke=Null; "#000000"; $object.stroke); \
+																																				Choose($object.fill=Null; "#000000"; $object.fill); \
+																																				$strokeWidth)*/
 			
 			
 			If (String:C10($object.fill)="transparent")
