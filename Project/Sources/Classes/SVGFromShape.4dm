@@ -86,30 +86,62 @@ Function objectToSVG($objetSVGParent : Variant; $object : Object; $coordinates :
 			
 		: ($object.type="rectangle")
 			
+			$strokeWidth:=Choose:C955($object.strokeWidth=Null:C1517; 1; $object.strokeWidth)
+			
 			// x ; y ; width ; height {; roundedX {; roundedY {; foregroundColor {; backgroundColor {; strokeWidth}}}}} )
-			SVG_New_rect($objetSVGParent; \
-				$object.left-$coordinates.left; \
-				$object.top-$coordinates.top; \
-				$object.left-$coordinates.left+$object.width; \
-				$object.top-$coordinates.top+$object.height; \
+			$rec:=SVG_New_rect($objetSVGParent; \
+				$object.left-$coordinates.left+($strokeWidth/2); \
+				$object.top-$coordinates.top+($strokeWidth/2); \
+				$object.left-$coordinates.left+$object.width-($strokeWidth); \
+				$object.top-$coordinates.top+$object.height-($strokeWidth); \
 				Choose:C955($object.borderRadius=Null:C1517; 0; $object.borderRadius); \
 				Choose:C955($object.borderRadius=Null:C1517; 0; $object.borderRadius); \
 				Choose:C955($object.stroke=Null:C1517; "#000000"; $object.stroke); \
 				Choose:C955($object.fill=Null:C1517; "#FFFFFF"; $object.fill); \
-				Choose:C955($object.strokeWidth=Null:C1517; 1; $object.strokeWidth))
+				$strokeWidth)
+			
+			If (String:C10($object.fill)="transparent")
+				DOM SET XML ATTRIBUTE:C866($rec; "fill-opacity"; 0)
+			End if 
+			
+			// SVG_SET_ID($rec;$objectName)
+/*SVG_Define_shadow($rec; "myShadow"; 4; 4; 4)
+SVG_SET_FILTER($rec; "myShadow")*/  // just some test to make a macro to add shadow
 			
 		: ($object.type="oval")
 			
+			If (String:C10($object.fill)="automatic")
+				$object:=OB Copy:C1225($object)
+				$object.fill:="white"  // or find a way with css style for dark mode
+			End if 
+			
+			$strokeWidth:=Choose:C955($object.strokeWidth=Null:C1517; 1; $object.strokeWidth)
+			
 			// x ; y ; xRadius ; yRadius {; foregroundColor {; backgroundColor {; strokeWidth}}}
-			SVG_New_ellipse($objetSVGParent; \
+			$rec:=SVG_New_ellipse($objetSVGParent; \
 				$object.left-$coordinates.left+($object.width/2); \
 				$object.top-$coordinates.top+($object.height/2); \
-				$object.width/2; \
-				$object.height/2; \
+				$object.width/2-($strokeWidth/2); \
+				$object.height/2-($strokeWidth/2); \
 				Choose:C955($object.stroke=Null:C1517; "#000000"; $object.stroke); \
 				Choose:C955($object.fill=Null:C1517; "#000000"; $object.fill); \
-				Choose:C955($object.strokeWidth=Null:C1517; 1; $object.strokeWidth))
-			// XXX or use SVG_New_ellipse_bounded if necessary
+				$strokeWidth)
+			
+			// or use SVG_New_ellipse_bounded if necessary (but seems do not consider strokewidth to center)
+			//		$rec:=SVG_New_ellipse_bounded($objetSVGParent; \
+																								$object.left-$coordinates.left+($strokeWidth/2); \
+																								$object.top-$coordinates.top+($strokeWidth/2); \
+																								$object.width-($strokeWidth*2); \
+																								$object.height-($strokeWidth*2); \
+																								Choose($object.stroke=Null; "#000000"; $object.stroke); \
+																								Choose($object.fill=Null; "#000000"; $object.fill); \
+																								$strokeWidth)*/
+			
+			
+			If (String:C10($object.fill)="transparent")
+				DOM SET XML ATTRIBUTE:C866($rec; "fill-opacity"; 0)
+			End if 
+			
 			
 		: ($object.type="picture")
 			
